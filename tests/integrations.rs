@@ -2,7 +2,7 @@ use assert_cmd::{assert::Assert, Command};
 use color_eyre::eyre::Result;
 
 #[test]
-/// Make sure --help runs. This indicated the binary works
+/// Make sure --help runs. This indicates the binary works
 fn test_helper() -> Result<()> {
     let mut cmd: Command = Command::cargo_bin("garden")?;
     let assert: Assert = cmd.arg("--help").assert();
