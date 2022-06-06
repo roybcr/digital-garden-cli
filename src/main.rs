@@ -1,4 +1,8 @@
-use color_eyre::eyre::{eyre, Result, WrapErr};
+use color_eyre::eyre::{
+    eyre, 
+    Result, 
+    WrapErr
+};
 use digital_garden::write;
 use directories::UserDirs;
 use std::path::PathBuf;
@@ -30,12 +34,12 @@ enum Command {
     },
 }
 
-fn get_default_garden_dir() -> Result<PathBuf> {
+fn get_default_garden_dir(prefix: &str) -> Result<PathBuf> {
     let user_dirs: UserDirs =
         UserDirs::new().ok_or_else(|| 
             eyre!("Couldn't find home directory"))?;
 
-    Ok(user_dirs.home_dir().join(".garden"))
+    Ok(user_dirs.home_dir().join(&format!("{}-garden", prefix)))
 }
 
 fn main() -> Result<()> {
@@ -46,7 +50,7 @@ fn main() -> Result<()> {
     let garden_path: PathBuf = match opt.garden_path {
         Some(pathbuf) => Ok(pathbuf),
         None => 
-            get_default_garden_dir()
+            get_default_garden_dir("my")
                 .wrap_err("`garden_path` was not supplied"),
     }?;
 
