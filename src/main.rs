@@ -9,7 +9,7 @@ use std::path::PathBuf;
 use structopt::StructOpt;
 
 /// A CLI for the growing and curation of a Digital Garden.
-#[derive(StructOpt, Debug)]
+#[derive(Debug, StructOpt)]
 #[structopt(name = "garden")]
 struct Opt {
     #[structopt(
@@ -24,7 +24,7 @@ struct Opt {
     cmd: Command,
 }
 
-#[derive(StructOpt, Debug)]
+#[derive(Debug, StructOpt)]
 enum Command {
     /// Write something in your garden
     Write {
@@ -45,6 +45,7 @@ fn get_default_garden_dir(prefix: &str) -> Result<PathBuf> {
 fn main() -> Result<()> {
     color_eyre::install()?;
     let opt: Opt = Opt::from_args();
+    println!("{:?}", opt);
     dbg!(&opt);
 
     let garden_path: PathBuf = match opt.garden_path {
